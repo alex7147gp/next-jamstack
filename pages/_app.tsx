@@ -1,6 +1,17 @@
-import '../styles/globals.css'
-import type { AppProps } from 'next/app'
+import { AppProps } from 'next/app'
+import { useServerStyles } from '@ui/ssr'
+import { UIProvider } from '@ui/Provider'
 
-export default function App({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />
+import '../ui/globals.css'
+
+const NextApp = ({ Component, pageProps }: AppProps) => {
+  useServerStyles()
+
+  return (
+    <UIProvider>
+      <Component {...pageProps} />
+    </UIProvider>
+  )
 }
+
+export default NextApp
