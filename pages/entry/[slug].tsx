@@ -1,3 +1,4 @@
+import { flatMap } from 'lodash'
 import { getPlant, getPlantList, getCategoryList } from '@api'
 
 import { Layout } from '@components/Layout'
@@ -11,22 +12,32 @@ import { GetStaticProps, InferGetStaticPropsType} from 'next'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 
+import { useTranslation } from 'next-i18next'
+
+  const { t } = useTranslation(['page-plant-entry']) 
 
 type PathType = {
   params: {
-    slug: string
+    slug: string,
   }
+  locales: string
 }
 
-export const getStaticPaths = async () => {
+export const getStaticPaths = async ({ locales }) => {
+
+  if(locales === undefined) {
+    throw new Error('Uh, did you forget configure locales in your Next.js config')
+  }
 
   const entries = await getPlantList({ limit: 10 })
 
-  const paths: PathType[] = entries.map((plant) => ({
+  const paths: PathType[] = flatMap(entries.map((plant) => ({
     params: {
       slug: plant.slug,
     },
-  }))
+  })),
+  (path) => locales.map((loc) => ({ locale: loc, ...path}))
+  )
 
   return {
     paths,
@@ -41,7 +52,7 @@ type PlantEntryPageProps = {
   categories: Category[] | null
 }
 
-export const getStaticProps: GetStaticProps<PlantEntryPageProps> = async ({ params, preview }) => {
+export const getStaticProps: GetStaticProps<PlantEntryPageProps> = async ({ params, preview, locale }) => {
   
   const slug = params?.slug
 
@@ -53,7 +64,7 @@ export const getStaticProps: GetStaticProps<PlantEntryPageProps> = async ({ para
 
   try{
 
-    const plant = await getPlant(slug, preview)
+    const plant = await getPlant(slug, preview, locale)
     const otherEntries = await getPlantList({ limit: 5 })
     const categories = await getCategoryList({ limit: 10 })  
       return {
@@ -110,7 +121,7 @@ export default function PlantEntryPage({ plant, otherEntries, categories }: Infe
         <Grid item xs={12} md={4} lg={3} component="aside">
           <section>
             <Typography variant="h5" component="h3" className="mb-4">
-              Recent Posts
+              {t('recentPosts')}
             </Typography>
             {otherEntries?.map((plantEntry) => (
               <article className="mb-4" key={plantEntry?.id}>
@@ -120,7 +131,7 @@ export default function PlantEntryPage({ plant, otherEntries, categories }: Infe
           </section>
           <section className="mt-10">
             <Typography variant="h5" component="h3" className="mb-4">
-              Categories
+              {t('categories')}
             </Typography>
             <ul className="list">
               {categories?.map((category) => (

@@ -6,6 +6,10 @@ import { Button } from '@ui/Button'
 import NotFound from './404'
 import ServerError from './500'
 
+import { useTranslation } from 'next-i18next'
+
+  const { t } = useTranslation(['page-errors']) 
+
 type ErrorPageProps = {
   statusCode?: number
   message?: string
@@ -23,8 +27,8 @@ const ErrorPage: NextPage<ErrorPageProps> = ({ statusCode, message }) => {
   let errorMessage = message
   if (!message) {
     errorMessage = statusCode
-      ? 'An error occurred on the server'
-      : 'An error occurred on the client'
+      ? {t('serverError')}
+      : {t('clientError')}
   }
 
   return (
@@ -49,7 +53,7 @@ const ErrorPage: NextPage<ErrorPageProps> = ({ statusCode, message }) => {
           href="/"
           title="Go back home"
         >
-          Go back home
+          {t('goHome')}
         </Button>
       </div>
     </Layout>

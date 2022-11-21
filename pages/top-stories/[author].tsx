@@ -14,6 +14,10 @@ import { IGetPlantListByAuthorQueryVariables } from '@api/generated/graphql'
 
 import ErrorPage from '../_error'
 
+import { useTranslation } from 'next-i18next'
+
+  const { t } = useTranslation(['page-top-stories']) 
+
 type TopStoriesPageProps = {
   authors: Author[]
 }
@@ -59,10 +63,10 @@ export default function TopStories({
   // which means, `router.query.author` will be ready since the very first render.
   const router = useRouter()
   const currentAuthor = router.query.author
-
+  const noInfoAvailable  = t('noInFoAvailable')
   if (typeof currentAuthor !== 'string' || authors.length === 0) {
     return (
-      <ErrorPage message="There is no information available. Did you forget to set up your Contenful space's content?" />
+      <ErrorPage message={noInfoAvailable} />
     )
   }
 
@@ -76,7 +80,7 @@ export default function TopStories({
     <Layout>
       <main className="pt-10">
         <div className="text-center pb-16">
-          <Typography variant="h2">Top 10 Stories</Typography>
+          <Typography variant="h2">{t('top10Stories')}</Typography>
         </div>
         <VerticalTabs
           tabs={tabs}
@@ -106,11 +110,11 @@ function AuthorTopStories(author: AuthorTopStoriesProps) {
         <AuthorCard {...author} />
       </section>
       {status === 'error' ? (
-        <Alert severity="error">Huh. Something went wrong.</Alert>
+        <Alert severity="error">{t('somthingWentWrong')}</Alert>
       ) : null}
       {status === 'success' && plants.length === 0 ? (
         <Alert severity="info">
-          {author.fullName} doesn't have any story yet.
+          {author.fullName} {t('authorHasNoStoriess')}
         </Alert>
       ) : null}
       <PlantCollection plants={plants} />

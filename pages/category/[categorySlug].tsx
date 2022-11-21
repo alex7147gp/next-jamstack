@@ -7,6 +7,10 @@ import { Typography } from '@ui/Typography'
 import { Layout } from '@components/Layout'
 import { PlantCollection } from '@components/PlantCollection'
 
+import { useTranslation } from 'next-i18next'
+
+  const { t } = useTranslation(['page-category']) 
+
 type CategoryPageProps = {
   entries: Plant[]
   category: Category
@@ -76,12 +80,12 @@ export default function CategoryPage({
   return (
     <Layout>
       <Typography variant="h2" className="text-center mb-12">
-        Category: {category.title}
+        {t('category')}: {category.title}
       </Typography>
       <PlantCollection plants={entries} />
       {entries.length > 0 ? null : (
         <Alert severity="info">
-          We couldn't find any entry for {category.title}
+          {t('categoryHasNoEntries')} {category.title}
         </Alert>
       )}
       {/* Pagination is missing. Can you add it?  */}
