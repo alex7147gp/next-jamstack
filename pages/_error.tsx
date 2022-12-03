@@ -8,14 +8,15 @@ import ServerError from './500'
 
 import { useTranslation } from 'next-i18next'
 
-  const { t } = useTranslation(['page-errors']) 
-
 type ErrorPageProps = {
   statusCode?: number
   message?: string
 }
 
 const ErrorPage: NextPage<ErrorPageProps> = ({ statusCode, message }) => {
+  
+  const { t } = useTranslation(['page-errors']) 
+
   if (statusCode === 404) {
     return <NotFound />
   }
@@ -27,8 +28,8 @@ const ErrorPage: NextPage<ErrorPageProps> = ({ statusCode, message }) => {
   let errorMessage = message
   if (!message) {
     errorMessage = statusCode
-      ? {t('serverError')}
-      : {t('clientError')}
+      ? t('serverError')
+      : t('clientError')
   }
 
   return (

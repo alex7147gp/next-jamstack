@@ -9,8 +9,6 @@ import { PlantCollection } from '@components/PlantCollection'
 
 import { useTranslation } from 'next-i18next'
 
-  const { t } = useTranslation(['page-category']) 
-
 type CategoryPageProps = {
   entries: Plant[]
   category: Category
@@ -19,6 +17,11 @@ type CategoryPageProps = {
 export const getStaticProps: GetStaticProps<CategoryPageProps> = async ({
   params,
 }) => {
+  
+
+  const { t } = useTranslation(['page-category']) 
+
+
   const slug = params?.categorySlug
 
   if (typeof slug !== 'string') {

@@ -1,8 +1,12 @@
 {
 	"pages": "Pages",
+	"search": "Search",
 	"gettingStarted": "Getting started",
 	"about": "About",
 	"search": "Search",
 	"topStories": "Top Stories",
+	"signIn": "Sign in",
+	"signOut": "Sign Out",
+	"premium": "Premium",
 	"PlatziSNext.jsCourseby": "Platzi's Next.js Course by",
 }

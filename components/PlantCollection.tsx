@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { memo } from 'react'
 import { Grid, GridProps } from '@ui/Grid'
 import { Typography } from '@ui/Typography'
 import { Button } from '@ui/Button'
@@ -20,7 +21,7 @@ export function PlantCollection({
   return (
     <Grid container component="ul" spacing={4} className={className}>
       {plants.map((plant) => (
-        <PlantEntry key={plant.id} plant={plant} variant={variant} />
+        <MemorizationPlantEntry key={plant.id} plant={plant} variant={variant} />
       ))}
     </Grid>
   )
@@ -30,6 +31,14 @@ type PlantEntryType = {
   plant: Plant
   variant?: 'square' | 'vertical'
 }
+
+  const isEqual = (previusProps: PlantEntryTypes, newProps: PlantEntryType ) => {
+    
+    return previusProps.plant.plantName === newProps.plantPlantName
+
+  }
+
+  export const MemorizationPlantEntry = memo(PlantEntry, isEqual)
 
 export function PlantEntry({ plant, variant = 'square' }: PlantEntryType) {
   let gridItemProps: GridProps = { xs: 6, md: 4 }
@@ -52,7 +61,7 @@ export function PlantEntry({ plant, variant = 'square' }: PlantEntryType) {
 
 export function PlantEntrySquare({ image, plantName, slug }: Plant) {
   return (
-    <Link href={`/entry/${slug}`}>
+    <Link href={`/entry/${slug}`} legacyBehavior>
       <a title={`Go to ${plantName}`}>
         <div className="opacity-95 hover:opacity-100">
           <Image 
@@ -60,6 +69,7 @@ export function PlantEntrySquare({ image, plantName, slug }: Plant) {
             layout="intrinsic" 
             width={460} 
             aspectRatio="4:3"
+            alt={plantName}
             />
           <div className="p-4">
             <Typography variant="h4" className="break-words">
@@ -79,7 +89,7 @@ export function PlantEntryInline({
   className,
 }: Plant & { className?: string }) {
   return (
-    <Link href={`/entry/${slug}`}>
+    <Link href={`/entry/${slug}`} legacyBehavior>
       <a title={`Go to ${plantName}`}>
         <div
           className={`opacity-95 hover:opacity-100 flex items-end ${className}`}
@@ -91,6 +101,7 @@ export function PlantEntryInline({
             aspectRatio="1:1"
             fit="fill"
             className="flex-none" 
+            alt={plantName}
           />
           <div className="pl-2 flex-auto">
             <Typography variant="h6" className="break-words">
@@ -111,9 +122,9 @@ export function PlantEntryVertical({
 }: Plant) {
   return (
     <div className="opacity-95 hover:opacity-100">
-      <Link href={`/entry/${slug}`}>
+      <Link href={`/entry/${slug}`} legacyBehavior>
         <a title={`Go to ${plantName}`}>
-          <img src={image.url} width={624} />
+          <img src={image.url} width={624} alt={plantName} />
           <Typography variant="h2" className="break-words pt-4 px-4">
             {plantName}
           </Typography>

@@ -14,8 +14,6 @@ import Link from 'next/link'
 
 import { useTranslation } from 'next-i18next'
 
-  const { t } = useTranslation(['page-plant-entry']) 
-
 type PathType = {
   params: {
     slug: string,
@@ -24,6 +22,8 @@ type PathType = {
 }
 
 export const getStaticPaths = async ({ locales }) => {
+
+    const { t } = useTranslation(['page-plant-entry']) 
 
   if(locales === undefined) {
     throw new Error('Uh, did you forget configure locales in your Next.js config')

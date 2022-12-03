@@ -1,8 +1,12 @@
 {
 	"pages": "Paginas",
+	"search": "Buscar",
 	"gettingStarted": "Iniciando",
 	"about": "Sobre",
 	"search": "Buscar",
 	"topStories": "Mejores Historias",
+	"signIn": "Iniciar sesion",
+	"signOut": "Cerrar sesion",
+	"premium": "Premium",
 	"PlatziSNext.jsCourseby": "Curso de Platzi Next.js por"
 }

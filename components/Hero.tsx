@@ -11,8 +11,8 @@ export function Hero({ plantName, slug, image, className }: HeroProps) {
           <img src={image.url} width={600} />
         </div>
         <div className="text-container absolute">
-          <Link href={`/entry/${slug}`}>
-            <a title={`Go to ${plantName}`}>
+          <Link href={`/entry/${slug}`} legacyBehavior>
+            <a title={`Go to ${plantName}`} >
               <Typography
                 variant="h1"
                 component="h2"

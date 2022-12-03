@@ -4,13 +4,14 @@ import { Button } from '@ui/Button'
 
 import { useTranslation } from 'next-i18next'
 
-  const { t } = useTranslation(['page-errors']) 
-
 export default function NotFoundPage({
   statusCode = 500,
 }: {
   statusCode?: number
 }) {
+
+  const { t } = useTranslation(['page-errors']) 
+
   return (
     <Layout>
       <div className="text-center">

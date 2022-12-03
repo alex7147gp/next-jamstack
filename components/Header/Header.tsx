@@ -11,9 +11,6 @@ import LocaleSwitcher from '@components/localeSwitcher'
 export function Header() {
 
   const { t, ready } = useTranslation(['common'])
-  
-  console.log(ready)
-  console.log(t('topStories'))
 
   return (
     <>
@@ -25,6 +22,9 @@ export function Header() {
         <NavBar title="🌿 Plantpedia">
           <div>
             <NavLink href="/top-stories">{t('topStories')}</NavLink>
+            <NavLink href="/search">{t('search')}</NavLink>
+            <NavLink href="/premium">{t('premium')}</NavLink>
+            <NavLink href="/wall">{t('wall')}</NavLink>
           </div>
         </NavBar>
       </div>
@@ -35,7 +35,7 @@ export function Header() {
 function NavLink({ children, ...linkProps }: PropsWithChildren<LinkProps>) {
   return (
     <Link {...linkProps} passHref>
-      <Button color="inherit" variant="text" component="a">
+      <Button color="inherit" variant="text" >
         {children}
       </Button>
     </Link>

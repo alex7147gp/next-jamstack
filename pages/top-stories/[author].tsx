@@ -16,8 +16,6 @@ import ErrorPage from '../_error'
 
 import { useTranslation } from 'next-i18next'
 
-  const { t } = useTranslation(['page-top-stories']) 
-
 type TopStoriesPageProps = {
   authors: Author[]
 }
@@ -59,6 +57,11 @@ export const getServerSideProps: GetServerSideProps<TopStoriesPageProps> =
 export default function TopStories({
   authors,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
+
+
+    const { t } = useTranslation(['page-top-stories']) 
+
+
   // Heads-up: `router.query` comes populated from the server as we are using `getServerSideProps`
   // which means, `router.query.author` will be ready since the very first render.
   const router = useRouter()
@@ -80,7 +83,7 @@ export default function TopStories({
     <Layout>
       <main className="pt-10">
         <div className="text-center pb-16">
-          <Typography variant="h2">{t('top10Stories')}</Typography>
+          <Typography variant="h2">{t('topStoriesA')}</Typography>
         </div>
         <VerticalTabs
           tabs={tabs}
